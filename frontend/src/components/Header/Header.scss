@@ -1,3 +1,24 @@
 .header {
-  width: 100%;
+  background: var(--main-color);
+  padding: 20px 30px;
+  border-bottom: 1px solid var(--border-color-1);
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  .name-icon {
+    img {
+      margin-right: 10px;
+    }
+    
+    h2 {
+      line-height: 27px;
+    }
+  }
+
+  .slogan {
+    font-size: 18px;
+  }
 }

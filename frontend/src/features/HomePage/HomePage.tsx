@@ -1,10 +1,11 @@
 import Header from '../../components/Header/Header.tsx';
+import MainContent from '../MainContent/MainContent.tsx';
 
 const HomePage = () => {
   return (
     <div>
         <Header />
-      <h1>Home Page</h1>
+        <MainContent />
     </div>
   );
 };

@@ -1,0 +1,29 @@
+.main-content {
+  .editor {
+    padding: 12px 16px;
+    margin: 32px 0 16px;
+    border: 1.5px solid var(--border-color-1);
+    border-radius: 7px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    
+    .closed {
+      cursor: text;
+    }
+    
+    .opened {
+      input {
+        height: 44px;
+        border: none;
+        
+        &:focus-visible {
+          outline: none;
+        }
+        
+        &::placeholder {
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
