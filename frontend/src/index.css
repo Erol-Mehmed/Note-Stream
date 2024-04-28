@@ -13,7 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
   
   --main-color: #feefc3;
-  --border-color-1: #757573; 
+  --main-color-2: #e5e0b0;
+  --gray-1: #757573; 
 }
 
 a {
