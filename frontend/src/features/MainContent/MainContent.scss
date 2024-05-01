@@ -29,22 +29,25 @@
         }
       }
       
-      button {
-        width: 70px;
-        font-size: 15px;
-        padding: 4px 2px;
+      .buttons-holder {
         align-self: flex-end;
-        background: none;
-        
-        &:hover {
-          background: var(--main-color);
-          border-color: #1a1a1a;
-        }
-        
-        &:focus,
-        &:focus-visible {
-          outline: none;
-          background: var(--main-color-2);
+
+        button {
+          width: 70px;
+          font-size: 15px;
+          padding: 4px 2px;
+          background: none;
+          
+          &:hover {
+            background: var(--main-color);
+            border-color: #1a1a1a;
+          }
+          
+          &:focus,
+          &:focus-visible {
+            outline: none;
+            background: var(--main-color-2);
+          }
         }
       }
     }

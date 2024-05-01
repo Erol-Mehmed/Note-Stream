@@ -1,31 +1,43 @@
-import { Grid } from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import "./MainContent.scss";
 import {useEffect, useRef, useState} from "react";
+import api from "../../services/api";
 
 const MainContent = () => {
   const [ openEditor, setOpenEditor ] = useState(false);
   const editorRef = useRef<HTMLDivElement | null>(null);
-  const formRef = useRef<HTMLFormElement | null>(null);
   
-  const handleClickOutside = (event: any) => {
-      if (editorRef.current && !editorRef.current.contains(event.target) && openEditor) {
-        const closeButton: HTMLButtonElement | null = editorRef.current?.querySelector('button[type="submit"]');
-        closeButton?.click();
-      }
-    };
+  const openForm = (event: any) => {
+    event.stopPropagation();
+    setOpenEditor(true);
+  };
   
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
+  const closeForm = (event: any) => {
+    event.stopPropagation();
+    setOpenEditor(false);
+  }
+  
+  const submitForm = async (event: any) => {
+    event.preventDefault();
     
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    }
-  });
-
+    const [title, content] = Array.from(event.target.querySelectorAll('input')).map((input: any) => input.value);
+    console.log({
+      title,
+      content
+    });
+    
+     await api.post('/notes', {
+      title,
+      content
+    });
+     
+     setOpenEditor(false);
+  };
+  
   useEffect(() => {
     if (openEditor) {
       const inputElement = editorRef.current?.querySelector('input[name="note"]');
-      
+
       if (inputElement instanceof HTMLElement) {
         inputElement.focus();
       }
@@ -34,28 +46,23 @@ const MainContent = () => {
   
   return (
     <Grid container className="main-content" justifyContent="center">
-      <Grid item xs={6} className="editor" ref={editorRef} onClick={(event) => {
-        event.stopPropagation();
-        setOpenEditor(true)}}>
+      <Grid item xs={6} className="editor" ref={editorRef} onClick={openForm}>
         {
         openEditor ?
-          (<form className="opened" ref={formRef} onSubmit={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-          }}>
-              <input name="title" placeholder="Title"></input>
-              <input name="note" placeholder="Take a note..."></input>
-              <button type="submit" onClick={(event) => {
-                event.stopPropagation();
-                setTimeout(() => {
-                  setOpenEditor(false);
-                }, 0);
-              }}>
-                Close
+          (<form className="opened" onSubmit={submitForm}>
+            <input name="title" placeholder="Title"></input>
+            <input name="note" placeholder="Take a note..."></input>
+            <Box className="buttons-holder">
+              <button type="button" onClick={closeForm}>
+                Cancel
               </button>
-            </form>) :
+              <button type="submit">
+                Submit
+              </button>
+            </Box>
+          </form>) :
           (<p className="closed">
-              Take a note...
+            Take a note...
           </p>)
         }
       </Grid>
