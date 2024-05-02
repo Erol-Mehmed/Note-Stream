@@ -1,8 +1,7 @@
 const router = require('express').Router();
 
-router.post('/notes', (req, res) => {
-  console.log('req body:', req.body);
-  res.status(200).send('Note created...');
-});
+const notesController = require('./controllers/notesController');
+
+router.use('/notes', notesController);
 
 module.exports = router;

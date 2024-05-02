@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT;
 const routes = require('./routes');
 const sequelize = require('./config/databaseConfig');
-const Note = require('./models/notes');
 
 const app = express();
 

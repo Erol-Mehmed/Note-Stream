@@ -7,7 +7,7 @@ const Header = () => {
     <Grid container className="header" alignItems="center" fontStyle="italic">
       <Grid item xs={4} className="name-icon" display="flex" alignItems="center">
         <img src={iconNote} alt="Note Stream Logo" />
-        <h2>Note Stream</h2>
+        <h1>Note Stream</h1>
       </Grid>
       <Grid item xs={4} display="flex" justifyContent="center">
         <p className="slogan">

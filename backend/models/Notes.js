@@ -18,3 +18,5 @@ Note.init({
     tableName: 'notes'
   }
 );
+
+module.exports = Note;

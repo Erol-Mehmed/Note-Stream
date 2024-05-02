@@ -3,7 +3,7 @@
   padding: 20px 30px;
   border-bottom: 1px solid var(--gray-1);
 
-  h2,
+  h1,
   p {
     margin: 0;
   }
@@ -13,7 +13,8 @@
       margin-right: 10px;
     }
     
-    h2 {
+    h1 {
+      font-size: 24px;
       line-height: 27px;
     }
   }
