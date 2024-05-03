@@ -3,8 +3,10 @@ import "./MainContent.scss";
 import {useEffect, useRef, useState} from "react";
 import api from "../../services/api";
 import iconClose from "../../assets/icon-close.svg";
+import NoteModal from "./NoteModal.tsx";
 
 const MainContent = () => {
+  const editorRef = useRef<HTMLDivElement | null>(null);
   const [ openEditor, setOpenEditor ] = useState(false);
   const [ formValidation, setFormValidation ] = useState('');
   const [ formValidationMessage, setFormValidationMessage ] = useState('');
@@ -12,7 +14,12 @@ const MainContent = () => {
   const [feedbackVisible, setFeedbackVisible] = useState(false);
   const [ title, setTitle ] = useState('');
   const [ content, setContent ] = useState('');
-  const editorRef = useRef<HTMLDivElement | null>(null);
+  const [ modalTitle, setModalTitle ] = useState('');
+  const [ modalContent, setModalContent ] = useState('');
+  const [ modalId, setModalId ] = useState(0);
+  const [data, setData] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [fetchData, setFetchData] = useState('');
   
   const openForm = (event: any) => {
     event.stopPropagation();
@@ -21,6 +28,8 @@ const MainContent = () => {
   
   const closeForm = (event: any) => {
     event.stopPropagation();
+    setTitle('');
+    setContent('');
     setOpenEditor(false);
   }
   
@@ -30,19 +39,20 @@ const MainContent = () => {
     setTitle(title.trim());
     setContent(content.trim());
 
-    console.log(title, content);
+    const localTitle = title.trim();
+    const localContent = content.trim();
     
-    if (title.length < 3 || content.length < 30 || [title, content].includes('')) {
+    if (localTitle.length < 3 || localContent.length < 30 || [localTitle, localContent].includes('')) {
       setFormValidation('validation-failed');
       
-      if ([title, content].includes('')) {
+      if ([localTitle, localContent].includes('')) {
         setFormValidationMessage('Both fields are required.');
-      } else if (title.length < 3 && content.length < 30) {
+      } else if (localTitle.length < 3 && localContent.length < 30) {
         setFormValidationMessage('Title must have at least 3 characters and content must have at least 30 characters.');
-      } else if (title.length < 3) {
+      } else if (localTitle.length < 3) {
         setFormValidationMessage('Title must have at least 3 characters.');
-      } else if (content.length < 30) {
-        setFormValidationMessage('Content must have at least 30 characters.');
+      } else if (localContent.length < 30) {
+        setFormValidationMessage('Note content must have at least 30 characters.');
       }
 
       event.target.querySelector('button[type="submit"]')?.blur();
@@ -56,6 +66,7 @@ const MainContent = () => {
       });
        
        setFeedbackMessage('Note added successfully.');
+       setFetchData('fetch');
     }
      
      setOpenEditor(false);
@@ -66,11 +77,14 @@ const MainContent = () => {
       return;
     }
     
+    setTitle('');
+    setContent('');
     setOpenEditor(false);
   };
   
   const handleChange = (event: any) => {
-    const { name, value } = event.target;
+    const value = event.target.innerText;
+    const name = event.target.className;
     
     if (name === 'title') {
       setTitle(value);
@@ -78,6 +92,42 @@ const MainContent = () => {
       setContent(value);
     }
   }
+  
+  const handleOpenModal = (title: string, content: string, id: number) => {
+    setModalTitle(title);
+    setModalContent(content);
+    setModalId(id);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = async (title: string, content: string, id: number, isChangedOrDelete: boolean | string) => {
+    if (isChangedOrDelete === true) {
+      await api.put(`/notes/${id}`, {
+        title,
+        content
+      });
+      
+      setFeedbackMessage('Note updated successfully.');
+      setFetchData('fetch')
+    } else if (isChangedOrDelete === 'delete') {
+      await api.delete(`/notes/${id}`);
+      
+      setFeedbackMessage('Note deleted successfully.');
+      setFetchData('fetch')
+    }
+    
+    setOpenModal(false);
+  };
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await api.get('/notes');
+      setData(response.data);
+    };
+    
+    fetchData().then(r => r);
+    setFetchData('');
+  }, [fetchData]);
   
   useEffect(() => {
     document.addEventListener('click', handleClick);
@@ -89,10 +139,10 @@ const MainContent = () => {
   
   useEffect(() => {
     if (openEditor) {
-      const inputElement = editorRef.current?.querySelector('input[name="note"]');
+      const contentElement = editorRef.current?.querySelector('.content');
 
-      if (inputElement instanceof HTMLElement) {
-        inputElement.focus();
+      if (contentElement instanceof HTMLElement) {
+        contentElement.focus();
       }
     } else {
       setFormValidation('');
@@ -102,7 +152,10 @@ const MainContent = () => {
   useEffect(() => {
     if (feedbackMessage) {
       setFeedbackVisible(true);
-      setTimeout(() => setFeedbackVisible(false), 10000);
+      setTimeout(() => {
+        setFeedbackVisible(false);
+        setFeedbackMessage(''); 
+      }, 10000);
     }
   }, [feedbackMessage]);
   
@@ -112,8 +165,18 @@ const MainContent = () => {
         {
         openEditor ?
           (<form className="opened" onSubmit={submitForm}>
-            <input name="title" placeholder="Title" value={title} onChange={handleChange}></input>
-            <input name="note" placeholder="Take a note..." value={content} onChange={handleChange}></input>
+            <div
+              className="title"
+              contentEditable="true"
+              onInput={handleChange}
+              data-placeholder="Title"
+            />
+            <div
+              className="content"
+              contentEditable="true"
+              onInput={handleChange}
+              data-placeholder="Take a note..."
+            />
             <Box className="buttons-holder">
               <button type="button" onClick={closeForm}>
                 Cancel
@@ -129,19 +192,31 @@ const MainContent = () => {
         }
         {
           formValidation ?
-          <p className="validation-failed-message">
-            {formValidationMessage}
-          </p> :
-          null
+            <p className="validation-failed-message">
+              {formValidationMessage}
+            </p> :
+            null
         }
       </Grid>
-      
-      <Grid item className="notes">
+
+      <Grid item className="notes-container">
         <h3>
           Notes
         </h3>
-        
-        
+        <Box className="notes">
+          {data.map((note: any, index) => (
+            <Box key={index} className="note" onClick={() => handleOpenModal(note.title, note.content, note.id)}>
+              <p className="title">
+                {note.title}
+              </p>
+              <p className="content">
+                {note.content}
+              </p>
+            </Box>
+          ))}
+          
+          {openModal && <NoteModal open={openModal} handleClose={handleCloseModal} title={modalTitle} content={modalContent} id={modalId} />}
+        </Box>
       </Grid>
       
       {
