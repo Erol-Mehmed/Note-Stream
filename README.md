@@ -1,6 +1,6 @@
 # Note Stream
 
-Note Stream is a simple note-taking application built with JavaScript, TypeScript, React, Express.js and Sequelize. The application allows users to create, update, and delete notes.
+Note Stream is a simple note-taking application built with JavaScript, TypeScript, React, Express.js, Sequelize and PostgreSQL. The application allows users to create, update, and delete notes.
 
 ## Prerequisites
 
