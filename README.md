@@ -23,5 +23,5 @@ To install Note Stream, follow these steps:
 ```
 3. Run **npm run dev** on the frontend directory and **npm start** on the backend directory.
 
-## Note
+## App URL
 You can open the app on **http://localhost:5173/**
