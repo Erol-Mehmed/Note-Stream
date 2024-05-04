@@ -1,5 +1,5 @@
 import { Modal, Box } from '@mui/material';
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import './NoteModal.scss';
 
 interface NoteModalProps {
@@ -16,6 +16,7 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose, title: initial
   const [isChanged, setIsChanged] = useState(false);
   const [formValidation, setFormValidation] = useState('');
   const [formValidationMessage, setFormValidationMessage] = useState('');
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -25,7 +26,7 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose, title: initial
     setContent(event.target.value);
   };
 
-  const validation = () => {
+  const validation = (closeBtn: boolean) => {
     const localTitle = title.trim();
     const localContent = content.trim();
 
@@ -41,6 +42,10 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose, title: initial
       } else if (localContent.length < 30) {
         setFormValidationMessage('Note content must have at least 30 characters.');
       }
+      
+      if (closeBtn) {
+        closeBtnRef.current?.blur();
+      }
     } else {
       handleClose(title, content, id, isChanged);
     }
@@ -55,7 +60,7 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose, title: initial
   }, [title, content]);
 
   return (
-    <Modal className="modal" open={open} onClose={validation}>
+    <Modal className="modal" open={open} onClose={() => validation(false)}>
       <Box className={`modal-content ${formValidation}`}>
         <input
           className="title"
@@ -70,7 +75,7 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose, title: initial
           onChange={handleContentChange}
         />
         <Box className="btn-wrapper" display="flex" alignSelf="flex-end">
-          <button onClick={validation}>
+          <button ref={closeBtnRef} onClick={() => validation(true)}>
             Close
           </button>
           <button onClick={() => handleClose(title, content, id, 'delete')}>
