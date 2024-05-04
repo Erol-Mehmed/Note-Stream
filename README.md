@@ -22,3 +22,6 @@ To install Note Stream, follow these steps:
   DB_CONNECTION_STRING='DB_CONNECTION_STRING='
 ```
 3. Run **npm run dev** on the frontend directory and **npm start** on the backend directory.
+
+## Note
+You can open the app on **http://localhost:5173/**
