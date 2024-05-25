@@ -1,4 +1,4 @@
-import {Box, Grid} from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import "./MainContent.scss";
 import {useEffect, useRef, useState} from "react";
 import api from "../../services/api";

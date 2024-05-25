@@ -1,11 +1,12 @@
 import './App.css';
 import HomePage from './features/HomePage/HomePage.tsx';
+import {AuthProvider} from "./hooks/useAuth.tsx";
 
-function App() {
+const App = () => {
   return (
-    <div>
+    <AuthProvider>
       <HomePage />
-    </div>
+    </AuthProvider>
   );
 };
 
