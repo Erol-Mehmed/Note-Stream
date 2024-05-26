@@ -1,7 +1,7 @@
 import {createContext, useContext, useState} from "react";
 
 // @ts-ignore
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }: any) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

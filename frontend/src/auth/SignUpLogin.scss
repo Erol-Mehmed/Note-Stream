@@ -18,6 +18,11 @@
       &:last-of-type {
         margin-bottom: 20px;
       }
+
+      &.error {
+        border-color: red;
+        outline: 1px solid red;
+      }
     }
     
     button {
@@ -73,8 +78,9 @@
     margin-top: 30px;
     background: red;
     color: white;
-    padding: 6px;
+    padding: 8px 10px;
     border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     
     p {
       margin: 0;
