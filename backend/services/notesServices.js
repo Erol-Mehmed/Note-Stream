@@ -2,9 +2,7 @@ const Note = require('../models/Notes');
 
 const createNote = async (title, content) => {
   try {
-    const note = await Note.create({ title, content });
-    
-    return note;
+    return await Note.create({title, content});
   } catch (error) {
     console.error(error);
     throw error;

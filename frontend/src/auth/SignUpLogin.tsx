@@ -1,6 +1,7 @@
 import "./SignUpLogin.scss";
 import { useState } from "react";
 import { Box, Grid } from "@mui/material";
+import api from "../services/api.ts";
 
 const SignUpLogin = () => {
   const [ signUpOrLogin, setSignUpOrLogin ] = useState('login');
@@ -14,69 +15,82 @@ const SignUpLogin = () => {
   const [signupPassword, setSignupPassword] = useState('');
   const [signupConfirmPassword, setSignupConfirmPassword] = useState('');
 
-  const [errorState, setErrorState] = useState({
-    loginEmailError: '',
-    loginPasswordError: '',
-    signUpEmailError: '',
-    signUpUsernameError: '',
-    signUpPasswordError: '',
-    signUpConfirmPasswordError: ''
-  });
+  const [loginEmailError, setLoginEmailError] = useState('');
+  const [loginPasswordError, setLoginPasswordError] = useState('');
+  const [signUpEmailError, setSignUpEmailError] = useState('');
+  const [signUpUsernameError, setSignUpUsernameError] = useState('');
+  const [signUpPasswordError, setSignUpPasswordError] = useState('');
+  const [signUpConfirmPasswordError, setSignUpConfirmPasswordError] = useState('');
   
   const formSwitch = () => {
     setErrorMessages([]);
     setSignUpOrLogin(signUpOrLogin === 'login' ? 'singUp' : 'login');
   };
 
-  const submitForm = (event: any) => {
+  const submit = async (event: any) => {
     event.preventDefault();
     
     setErrorMessages([]);
-    setErrorState({
-      loginEmailError: '',
-      loginPasswordError: '',
-      signUpEmailError: '',
-      signUpUsernameError: '',
-      signUpPasswordError: '',
-      signUpConfirmPasswordError: ''
-    });
+    setLoginEmailError('');
+    setLoginPasswordError('');
+    setSignUpEmailError('');
+    setSignUpUsernameError('');
+    setSignUpPasswordError('');
+    setSignUpConfirmPasswordError('');
     
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (signUpOrLogin === 'login') {
       if (!emailRegex.test(loginEmail)) {
-          setErrorState({ ...errorState, loginEmailError: 'error' });
-        console.log('email:', errorState);
-          setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email format.']);
+        setLoginEmailError('error');
+        setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email format.']);
       }
       
       if (loginPassword.length < 6) {
-        setErrorState({ ...errorState, loginPasswordError: 'error' });
+        setLoginPasswordError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Password must have at least 6 characters.']);
       }
-      console.log(errorState);
+      
+      if (errorMessages.length > 0) {
+        return;
+      }
+      
+      await api.post('/users/login', {
+        email: loginEmail,
+        password: loginPassword  
+      });
     } else {
       const usernameRegex = /^[a-zA-Z0-9]{3,}$/;
       
       if (!emailRegex.test(signupEmail)) {
-        setErrorState({ ...errorState, signUpEmailError: 'error' });
+        setSignUpEmailError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email format.']);
       }
       
       if (!usernameRegex.test(signupUsername)) {
-        setErrorState({ ...errorState, signUpUsernameError: 'error' });
+        setSignUpUsernameError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Username must have at least 3 characters.']);
       }
       
       if (signupPassword.length < 6) {
-        setErrorState({ ...errorState, signUpPasswordError: 'error' });
+        setSignUpPasswordError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Password must have at least 6 characters.']);
       }
 
       if (signupPassword !== signupConfirmPassword) {
-        setErrorState({ ...errorState, signUpConfirmPasswordError: 'error' });
+        setSignUpConfirmPasswordError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Passwords do not match.']);
       }
+      
+      if (errorMessages.length > 0) {
+        return;
+      }
+
+      await api.post('/users/register', {
+        email: signupEmail,
+        username: signupUsername,
+        password: signupPassword
+      });
     }
   };
 
@@ -87,10 +101,10 @@ const SignUpLogin = () => {
       ? (
         <Box display="flex" flexDirection="column" alignItems="center">
           <h2>Login</h2>
-          <form method="GET" className="form" onSubmit={submitForm}>
-            <input type="text" name="email" placeholder="Email" className={errorState.loginEmailError} value={loginEmail} 
+          <form className="form" onSubmit={submit}>
+            <input type="text" name="email" placeholder="Email" className={loginEmailError} value={loginEmail} 
               onChange={(e) => setLoginEmail(e.target.value)} />
-            <input type="password" name="password" placeholder="Password" className={errorState.loginPasswordError} value={loginPassword}
+            <input type="password" name="password" placeholder="Password" className={loginPasswordError} value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)} />
             <button type="submit">Login</button>
           </form>
@@ -105,14 +119,14 @@ const SignUpLogin = () => {
       : (
           <Box display="flex" flexDirection="column" alignItems="center">
             <h2>Sign Up</h2>
-            <form method="POST" className="form" onSubmit={submitForm}>
-              <input type="text" name="email" placeholder="Email" className={errorState.signUpEmailError} value={signupEmail}
+            <form className="form" onSubmit={submit}>
+              <input type="text" name="email" placeholder="Email" className={signUpEmailError} value={signupEmail}
                  onChange={(e) => setSignupEmail(e.target.value)} />
-              <input type="text" name="username" placeholder="Username" className={errorState.signUpUsernameError} value={signupUsername}
+              <input type="text" name="username" placeholder="Username" className={signUpUsernameError} value={signupUsername}
                  onChange={(e) => setSignupUsername(e.target.value)} />
-              <input type="password" name="password" placeholder="Password" className={errorState.signUpPasswordError} value={signupPassword}
+              <input type="password" name="password" placeholder="Password" className={signUpPasswordError} value={signupPassword}
                  onChange={(e) => setSignupPassword(e.target.value)} />
-              <input type="password" name="confirmPassword" placeholder="Confirm password" className={errorState.signUpConfirmPasswordError} value={signupConfirmPassword}
+              <input type="password" name="confirmPassword" placeholder="Confirm password" className={signUpConfirmPasswordError} value={signupConfirmPassword}
                  onChange={(e) => setSignupConfirmPassword(e.target.value)} />
               <button type="submit">Sign Up</button>
             </form>

@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 const notesServices = require('../services/notesServices');
 
 router.post('/', async (req, res) => {
