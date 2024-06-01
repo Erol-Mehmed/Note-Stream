@@ -38,51 +38,62 @@ const SignUpLogin = () => {
     setSignUpPasswordError('');
     setSignUpConfirmPasswordError('');
     
+    let validationError = false;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (signUpOrLogin === 'login') {
       if (!emailRegex.test(loginEmail)) {
         setLoginEmailError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email format.']);
+        validationError = true;
       }
       
       if (loginPassword.length < 6) {
         setLoginPasswordError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Password must have at least 6 characters.']);
+        validationError = true;
       }
       
-      if (errorMessages.length > 0) {
+      if (validationError) {
         return;
       }
       
-      await api.post('/users/login', {
+      const response = await api.post('/users/login', {
         email: loginEmail,
         password: loginPassword  
       });
+
+      if (response.data.message === 'User not found!') {
+        setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'User not found!']);
+      }
     } else {
       const usernameRegex = /^[a-zA-Z0-9]{3,}$/;
       
       if (!emailRegex.test(signupEmail)) {
         setSignUpEmailError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email format.']);
+        validationError = true;
       }
       
       if (!usernameRegex.test(signupUsername)) {
         setSignUpUsernameError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Username must have at least 3 characters.']);
+        validationError = true;
       }
       
       if (signupPassword.length < 6) {
         setSignUpPasswordError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Password must have at least 6 characters.']);
+        validationError = true;
       }
 
       if (signupPassword !== signupConfirmPassword) {
         setSignUpConfirmPasswordError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Passwords do not match.']);
+        validationError = true;
       }
       
-      if (errorMessages.length > 0) {
+      if (validationError) {
         return;
       }
 

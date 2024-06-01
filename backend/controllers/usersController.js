@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const usersService = require('../services/usersService');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 router.post('/register', async (req, res) => {
   try {
@@ -15,8 +17,15 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
-
+    const user = await usersService.getUser(email, password);
+    
+    if (!user) {
+      res.status(200).json({ message: 'User not found!' });
+    } else {
+      const token = jwt.sign({ email, password }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      res.cookie('token', token, { httpOnly: true });
+      res.status(200).json({ message: 'Login successful' }); 
+    }
   } catch(error) {
     res.status(500).json({ error: error.toString() });
   }
