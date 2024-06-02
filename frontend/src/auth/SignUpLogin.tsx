@@ -1,7 +1,8 @@
 import "./SignUpLogin.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import api from "../services/api.ts";
+import { useNavigate } from "react-router-dom";
 
 const SignUpLogin = () => {
   const [ signUpOrLogin, setSignUpOrLogin ] = useState('login');
@@ -22,14 +23,29 @@ const SignUpLogin = () => {
   const [signUpPasswordError, setSignUpPasswordError] = useState('');
   const [signUpConfirmPasswordError, setSignUpConfirmPasswordError] = useState('');
   
+  const routeNavigate = useNavigate();
+
+  useEffect(() => {
+    console.log('Component has mounted');
+    // You can perform any data fetching or setup here
+
+    return () => {
+      // This is the cleanup function that gets called when the component unmounts
+      console.log('Component will unmount');
+    };
+  }, []); // The empty array means this effect runs once on mount and cleanup on unmount
+
   const formSwitch = () => {
     setErrorMessages([]);
     setSignUpOrLogin(signUpOrLogin === 'login' ? 'singUp' : 'login');
+
+    const currentRoute = signUpOrLogin === 'login' ? '/register' : '/login';
+    routeNavigate(currentRoute);
   };
 
   const submit = async (event: any) => {
     event.preventDefault();
-    
+
     setErrorMessages([]);
     setLoginEmailError('');
     setLoginPasswordError('');
@@ -60,11 +76,14 @@ const SignUpLogin = () => {
       
       const response = await api.post('/users/login', {
         email: loginEmail,
-        password: loginPassword  
+        password: loginPassword
       });
 
-      if (response.data.message === 'User not found!') {
-        setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'User not found!']);
+      if (response.data.error === 'Invalid email or password') {
+        setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email or password']);
+      } else {
+        console.log(response, document.cookie);
+        
       }
     } else {
       const usernameRegex = /^[a-zA-Z0-9]{3,}$/;

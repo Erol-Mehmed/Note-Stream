@@ -1,24 +1,20 @@
-import Header from '../../components/Header/Header.tsx';
 import MainContent from '../MainContent/MainContent.tsx';
-import { useAuth } from "../../hooks/useAuth.tsx";
-import SignUpLogin from "../../auth/SignUpLogin.tsx";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const HomePage = () => {
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const routeNavigate = useNavigate();
 
-  console.log(isLoggedIn);
+  useEffect(() => {
+    console.log('cookie:', document.cookie);
+    
+    if (localStorage.getItem('token') === null) {
+      routeNavigate('/login');
+    }
+  }, []);
   
   return (
-    <div>
-          <Header />
-      {
-        !isLoggedIn
-        ? <SignUpLogin />
-        : (<div>
-        <MainContent />
-        </div>)
-      }
-    </div>
+    <MainContent />
   );
 };
 
