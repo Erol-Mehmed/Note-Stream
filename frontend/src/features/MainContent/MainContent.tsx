@@ -63,8 +63,12 @@ const MainContent = () => {
        await api.post('/notes', {
         title,
         content
-      });
-       
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+       });
+
        setFeedbackMessage('Note added successfully.');
        setFetchData('fetch');
     }

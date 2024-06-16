@@ -1,8 +1,8 @@
 const Note = require('../models/Notes');
 
-const createNote = async (title, content) => {
+const createNote = async (userId, title, content) => {
   try {
-    return await Note.create({title, content});
+    return await Note.create({userId, title, content});
   } catch (error) {
     console.error(error);
     throw error;

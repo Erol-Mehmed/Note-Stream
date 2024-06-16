@@ -4,6 +4,6 @@ const notesController = require('./controllers/notesController');
 const authController = require('./controllers/authController');
 
 router.use('/notes', notesController);
-router.use('/users', authController);
+router.use('/auth', authController);
 
 module.exports = router;

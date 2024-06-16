@@ -6,8 +6,6 @@ const HomePage = () => {
   const routeNavigate = useNavigate();
 
   useEffect(() => {
-    console.log('cookie:', document.cookie);
-    
     if (localStorage.getItem('token') === null) {
       routeNavigate('/login');
     }

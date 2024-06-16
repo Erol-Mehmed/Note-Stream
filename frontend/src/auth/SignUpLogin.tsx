@@ -1,5 +1,5 @@
 import "./SignUpLogin.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Grid } from "@mui/material";
 import api from "../services/api.ts";
 import { useNavigate } from "react-router-dom";
@@ -24,16 +24,6 @@ const SignUpLogin = () => {
   const [signUpConfirmPasswordError, setSignUpConfirmPasswordError] = useState('');
   
   const routeNavigate = useNavigate();
-
-  useEffect(() => {
-    console.log('Component has mounted');
-    // You can perform any data fetching or setup here
-
-    return () => {
-      // This is the cleanup function that gets called when the component unmounts
-      console.log('Component will unmount');
-    };
-  }, []); // The empty array means this effect runs once on mount and cleanup on unmount
 
   const formSwitch = () => {
     setErrorMessages([]);
@@ -69,21 +59,26 @@ const SignUpLogin = () => {
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Password must have at least 6 characters.']);
         validationError = true;
       }
-      
+
       if (validationError) {
         return;
       }
       
-      const response = await api.post('/users/login', {
+      const response = await api.post('/auth/login', {
         email: loginEmail,
         password: loginPassword
-      });
+      },
+        {
+          withCredentials: true
+        });
 
       if (response.data.error === 'Invalid email or password') {
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email or password']);
       } else {
-        console.log(response, document.cookie);
-        
+        console.log('signUpLogin:', response, document.cookie);
+
+        localStorage.setItem('token', response.data.token);
+        routeNavigate('/');
       }
     } else {
       const usernameRegex = /^[a-zA-Z0-9]{3,}$/;
@@ -116,7 +111,7 @@ const SignUpLogin = () => {
         return;
       }
 
-      await api.post('/users/register', {
+      await api.post('/auth/register', {
         email: signupEmail,
         username: signupUsername,
         password: signupPassword

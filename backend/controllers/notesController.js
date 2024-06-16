@@ -1,10 +1,22 @@
 const router = require('express').Router();
 const notesServices = require('../services/notesServices');
+const jwt = require('jsonwebtoken');
+
+/**
+ * Decodes the token and returns the payload
+ * @param token
+ * @returns {*}
+ */
+const tokenDecoding = (token) => {
+  return jwt.verify(token, process.env.JWT_SECRET).id;
+}
 
 router.post('/', async (req, res) => {
   try {
+    console.log('test:', req.header('authorization'));
+    
     const { title, content } = req.body;
-    const note = await notesServices.createNote(title.trim(), content.trim());
+    const note = await notesServices.createNote(tokenDecoding(req.header('authorization')), title.trim(), content.trim());
     
     res.status(201).json(note);
   } catch (error) {
