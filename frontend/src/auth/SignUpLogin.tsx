@@ -68,9 +68,9 @@ const SignUpLogin = () => {
         email: loginEmail,
         password: loginPassword
       },
-        {
-          withCredentials: true
-        });
+      {
+        withCredentials: true
+      });
 
       if (response.data.error === 'Invalid email or password') {
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email or password']);
@@ -78,7 +78,7 @@ const SignUpLogin = () => {
         routeNavigate('/');
       }
     } else {
-      const usernameRegex = /^[a-zA-Z0-9]{3,}$/;
+      const usernameRegex = /^[a-zA-Z0-9 ]{3,}$/;
       
       if (!emailRegex.test(signupEmail)) {
         setSignUpEmailError('error');
@@ -113,12 +113,13 @@ const SignUpLogin = () => {
         username: signupUsername,
         password: signupPassword
       },
-        {
-          withCredentials: true
-        });
-      
+      {
+        withCredentials: true
+      });
+
       if (response.data.error === 'Email already registered') {
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Email already registered']);
+        setSignUpEmailError('error');
       } else {
         routeNavigate('/');
       }

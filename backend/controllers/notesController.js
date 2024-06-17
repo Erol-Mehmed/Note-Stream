@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const notesServices = require('../services/notesServices');
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 /**
  * Decodes the token and returns the payload
@@ -9,12 +9,12 @@ const jwt = require('jsonwebtoken');
  */
 const tokenDecoding = (token) => {
   return jwt.verify(token, process.env.JWT_SECRET).id;
-}
+};
 
 router.post('/', async (req, res) => {
   try {
     const { title, content } = req.body;
-    const note = await notesServices.createNote(tokenDecoding(req.header('authorization').split(' ')[1]), title.trim(), content.trim());
+    const note = await notesServices.createNote(tokenDecoding(req.cookies[process.env.AUTH_COOKIE_NAME]), title.trim(), content.trim());
     
     res.status(201).json(note);
   } catch (error) {
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const notes = await notesServices.getNotes(tokenDecoding(req.header('authorization').split(' ')[1]));
+    const notes = await notesServices.getNotes(tokenDecoding(req.cookies[process.env.AUTH_COOKIE_NAME]));
     
     res.status(200).json(notes);
   } catch(error) {

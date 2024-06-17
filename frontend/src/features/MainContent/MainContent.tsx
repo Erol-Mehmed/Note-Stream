@@ -64,10 +64,8 @@ const MainContent = () => {
         title,
         content
       }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-       });
+        withCredentials: true
+      });
 
        setFeedbackMessage('Note added successfully.');
        setFetchData('fetch');
@@ -126,9 +124,7 @@ const MainContent = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await api.get('/notes', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+        withCredentials: true
       });
       setData(response.data);
     };

@@ -17,8 +17,8 @@ app.use(cors({
   origin: process.env.CLIENT_URL,
   credentials: true
 }));
-app.use(routes);
 app.use(cookieParser());
+app.use(routes);
 
 sequelize.authenticate()
 .then(() => console.log('Database connected...'))
