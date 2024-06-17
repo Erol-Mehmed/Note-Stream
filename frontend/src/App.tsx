@@ -7,8 +7,8 @@ import Header from "./components/Header/Header.tsx";
 const App = () => {
   return (
     <div>
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/login" element={<SignUpLogin />} />
           <Route path="/register" element={<SignUpLogin />} />

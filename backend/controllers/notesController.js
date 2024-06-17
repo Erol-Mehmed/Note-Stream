@@ -13,10 +13,8 @@ const tokenDecoding = (token) => {
 
 router.post('/', async (req, res) => {
   try {
-    console.log('test:', req.header('authorization'));
-    
     const { title, content } = req.body;
-    const note = await notesServices.createNote(tokenDecoding(req.header('authorization')), title.trim(), content.trim());
+    const note = await notesServices.createNote(tokenDecoding(req.header('authorization').split(' ')[1]), title.trim(), content.trim());
     
     res.status(201).json(note);
   } catch (error) {
@@ -26,7 +24,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const notes = await notesServices.getNotes();
+    const notes = await notesServices.getNotes(tokenDecoding(req.header('authorization').split(' ')[1]));
     
     res.status(200).json(notes);
   } catch(error) {

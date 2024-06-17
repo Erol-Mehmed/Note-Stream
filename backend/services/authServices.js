@@ -9,7 +9,7 @@ const getUser = async (email, password) => {
   if (!user) {
     throw new Error;
   } else {
-    return await jwt.sign({ email, password }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    return await jwt.sign({ id: user.id, email, password }, process.env.JWT_SECRET, { expiresIn: '24h' });
   }
 };
 

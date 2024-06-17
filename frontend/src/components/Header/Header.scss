@@ -22,4 +22,20 @@
   .slogan {
     font-size: 18px;
   }
+  
+  .logout-btn {
+    padding: 8px 18px;
+    background: #213547;
+    color: white;
+    
+    &:hover {
+      border-color: #213547;
+      background: white;
+      color: #213547;
+    }
+    
+    &:active {
+      background: #efeeee;
+    }
+  }
 }

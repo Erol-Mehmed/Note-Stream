@@ -1,17 +1,17 @@
 const Note = require('../models/Notes');
 
-const createNote = async (userId, title, content) => {
+const createNote = async (authorId, title, content) => {
   try {
-    return await Note.create({userId, title, content});
+    return await Note.create({ authorId, title, content });
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-const getNotes = async () => {
+const getNotes = async (authorId) => {
   try {
-    let notes = await Note.findAll();
+    let notes = await Note.findAll({ where: { authorId } });
 
     notes = notes.sort((a, b) => {
       return a.createdAt - b.createdAt;

@@ -75,9 +75,6 @@ const SignUpLogin = () => {
       if (response.data.error === 'Invalid email or password') {
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email or password']);
       } else {
-        console.log('signUpLogin:', response, document.cookie);
-
-        localStorage.setItem('token', response.data.token);
         routeNavigate('/');
       }
     } else {
@@ -111,11 +108,20 @@ const SignUpLogin = () => {
         return;
       }
 
-      await api.post('/auth/register', {
+      const response = await api.post('/auth/register', {
         email: signupEmail,
         username: signupUsername,
         password: signupPassword
-      });
+      },
+        {
+          withCredentials: true
+        });
+      
+      if (response.data.error === 'Email already registered') {
+        setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Email already registered']);
+      } else {
+        routeNavigate('/');
+      }
     }
   };
 
