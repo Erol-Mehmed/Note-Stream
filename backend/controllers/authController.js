@@ -30,6 +30,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/check' , async (req, res) => {
   try {
+    // The verify method throws error if the token is invalid
     jwt.verify(req.cookies[process.env.AUTH_COOKIE_NAME], process.env.JWT_SECRET);
 
     res.status(200).json({ isAuthenticated: true });

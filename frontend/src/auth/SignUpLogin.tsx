@@ -1,10 +1,27 @@
 import "./SignUpLogin.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import api from "../services/api.ts";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth.ts";
 
 const SignUpLogin = () => {
+  const routeNavigate = useNavigate();
+  const location = useLocation();
+  const { isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      routeNavigate('/');
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (location.pathname === '/register') {
+      setSignUpOrLogin('singUp');
+    }
+  }, []);
+  
   const [ signUpOrLogin, setSignUpOrLogin ] = useState('login');
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   
@@ -22,12 +39,24 @@ const SignUpLogin = () => {
   const [signUpUsernameError, setSignUpUsernameError] = useState('');
   const [signUpPasswordError, setSignUpPasswordError] = useState('');
   const [signUpConfirmPasswordError, setSignUpConfirmPasswordError] = useState('');
-  
-  const routeNavigate = useNavigate();
 
   const formSwitch = () => {
     setErrorMessages([]);
     setSignUpOrLogin(signUpOrLogin === 'login' ? 'singUp' : 'login');
+
+    setLoginEmail('');
+    setLoginPassword('');
+    setSignupEmail('');
+    setSignupUsername('');
+    setSignupPassword('');
+    setSignupConfirmPassword('');
+
+    setLoginEmailError('');
+    setLoginPasswordError('');
+    setSignUpEmailError('');
+    setSignUpUsernameError('');
+    setSignUpPasswordError('');
+    setSignUpConfirmPasswordError('');
 
     const currentRoute = signUpOrLogin === 'login' ? '/register' : '/login';
     routeNavigate(currentRoute);
