@@ -96,10 +96,11 @@
       
       .note {
         width: 240px;
-        height: fit-content;
+        height: 130px;
         border: 1px solid lightgrey;
         border-radius: 5px;
         padding: 8px 12px;
+        overflow: hidden;
 
         p {
           margin: 0;
@@ -111,12 +112,15 @@
         }
         
         .content {
+          height: 110px;
           font-size: 14px;
           font-family: italic, serif;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         
         &:hover {
-          outline: 2px solid black;
+          outline: 1px solid black;
           cursor: pointer;
         }
       }

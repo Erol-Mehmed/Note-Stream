@@ -17,6 +17,12 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose, title: initial
   const [formValidation, setFormValidation] = useState('');
   const [formValidationMessage, setFormValidationMessage] = useState('');
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  
+  const cancelChanges = () => {
+    setTitle(initialTitle);
+    setContent(initialContent);
+    handleClose(initialTitle, initialContent, id, false);
+  };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -62,6 +68,10 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose, title: initial
   return (
     <Modal className="modal" open={open} onClose={() => validation(false)}>
       <Box className={`modal-content ${formValidation}`}>
+        <h2>
+          View and edit your note
+        </h2>
+        <hr />
         <input
           className="title"
           placeholder="Title"
@@ -75,11 +85,14 @@ const NoteModal: React.FC<NoteModalProps> = ({ open, handleClose, title: initial
           onChange={handleContentChange}
         />
         <Box className="btn-wrapper" display="flex" alignSelf="flex-end">
-          <button ref={closeBtnRef} onClick={() => validation(true)}>
-            Close
-          </button>
           <button onClick={() => handleClose(title, content, id, 'delete')}>
             Delete
+          </button>
+          <button onClick={() => cancelChanges()}>
+            Cancel
+          </button>
+          <button ref={closeBtnRef} onClick={() => validation(true)}>
+            Submit
           </button>
         </Box>
         {
