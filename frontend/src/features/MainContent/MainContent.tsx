@@ -20,31 +20,32 @@ const MainContent = () => {
   const [data, setData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [fetchData, setFetchData] = useState('');
-  
+
   const openForm = (event: any) => {
     event.stopPropagation();
     setOpenEditor(true);
   };
-  
+
   const closeForm = (event: any) => {
     event.stopPropagation();
+
     setTitle('');
     setContent('');
     setOpenEditor(false);
   }
-  
+
   const submitForm = async (event: any) => {
     event.preventDefault();
-    
+
     setTitle(title.trim());
     setContent(content.trim());
 
     const localTitle = title.trim();
     const localContent = content.trim();
-    
+
     if (localTitle.length < 3 || localContent.length < 30 || [localTitle, localContent].includes('')) {
       setFormValidation('validation-failed');
-      
+
       if ([localTitle, localContent].includes('')) {
         setFormValidationMessage('Both fields are required.');
       } else if (localTitle.length < 3 && localContent.length < 30) {
@@ -56,7 +57,7 @@ const MainContent = () => {
       }
 
       event.target.querySelector('button[type="submit"]')?.blur();
-      
+
       return;
     }
     else {
@@ -70,31 +71,31 @@ const MainContent = () => {
        setFeedbackMessage('Note added successfully.');
        setFetchData('fetch');
     }
-     
+
      setOpenEditor(false);
   };
-  
+
   const handleClick = (event: any) => {
     if (editorRef.current?.contains(event.target)) {
       return;
     }
-    
+
     setTitle('');
     setContent('');
     setOpenEditor(false);
   };
-  
+
   const handleChange = (event: any) => {
     const value = event.target.innerText;
     const name = event.target.className;
-    
+
     if (name === 'title') {
       setTitle(value);
     } else {
       setContent(value);
     }
   }
-  
+
   const handleOpenModal = (title: string, content: string, id: number) => {
     setModalTitle(title);
     setModalContent(content);
@@ -108,19 +109,19 @@ const MainContent = () => {
         title,
         content
       });
-      
+
       setFeedbackMessage('Note updated successfully.');
       setFetchData('fetch')
     } else if (isChangedOrDelete === 'delete') {
       await api.delete(`/notes/${id}`);
-      
+
       setFeedbackMessage('Note deleted successfully.');
       setFetchData('fetch')
     }
-    
+
     setOpenModal(false);
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await api.get('/notes', {
@@ -128,19 +129,19 @@ const MainContent = () => {
       });
       setData(response.data);
     };
-    
+
     fetchData().then(r => r);
     setFetchData('');
   }, [fetchData]);
-  
+
   useEffect(() => {
     document.addEventListener('click', handleClick);
-    
+
     return () => {
       document.removeEventListener('click', handleClick);
     };
   });
-  
+
   useEffect(() => {
     if (openEditor) {
       const contentElement = editorRef.current?.querySelector('.content');
@@ -162,7 +163,7 @@ const MainContent = () => {
       }, 10000);
     }
   }, [feedbackMessage]);
-  
+
   return (
     <Grid container className="main-content" direction="column">
       <Grid item className={`editor ${formValidation}`} ref={editorRef} alignSelf="center" onClick={openForm}>
@@ -218,11 +219,11 @@ const MainContent = () => {
               </p>
             </Box>
           ))}
-          
+
           {openModal && <NoteModal open={openModal} handleClose={handleCloseModal} title={modalTitle} content={modalContent} id={modalId} />}
         </Box>
       </Grid>
-      
+
       {
         feedbackMessage && feedbackVisible ?
           <Grid item className={`feedback-message ${feedbackVisible ? 'fade-in' : 'fade-out'}`}>

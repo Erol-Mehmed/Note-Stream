@@ -11,7 +11,7 @@ const App = () => {
   const handleNotFoundPage = () => {
     setHideHeader(true);
   };
-  
+
   return (
     <div>
       <Router>

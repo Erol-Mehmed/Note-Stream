@@ -7,7 +7,7 @@ import useAuth from "../../hooks/useAuth.ts";
 const HomePage = () => {
   const routeNavigate = useNavigate();
   const { isLoggedIn } = useAuth();
-  
+
   useEffect(() => {
     const checkAuth = async () => {
       const response = await api.get('auth/check', {
@@ -18,7 +18,7 @@ const HomePage = () => {
         routeNavigate('/login');
       }
     };
-    
+
     checkAuth().then(r => r);
   }, []);
 

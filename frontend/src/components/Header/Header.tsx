@@ -5,7 +5,7 @@ import useAuth from '../../hooks/useAuth.ts';
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
-  
+
   return (
     <Grid container className="header" alignItems="center" fontStyle="italic">
       <Grid item xs={4} className="name-icon" display="flex" alignItems="center">

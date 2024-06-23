@@ -12,6 +12,11 @@
     padding: 15px 30px;
     background: whitesmoke;
     
+    &.delete-confirm {
+      height: 200px;
+      justify-content: space-around;
+    }
+    
     h2 {
       margin: 0 auto;
     }

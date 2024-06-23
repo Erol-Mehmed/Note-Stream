@@ -11,18 +11,18 @@ const useAuth = () => {
       const response = await api.get('auth/check', {
         withCredentials: true
       });
-  
+
       setIsLoggedIn(response.data.isAuthenticated);
     }
-    
+
     checkAuth().then(r => r);
   });
-  
+
   const logout = async () => {
     await api.post('auth/logout', {}, {
       withCredentials: true
     })
-    
+
     setIsLoggedIn(false);
     routeNavigate('/login');
   };
