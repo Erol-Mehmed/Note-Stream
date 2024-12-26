@@ -5,30 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="989dbc87-6edd-47e9-8721-45cbe835742a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.prettierignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.prettierrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/controllers/users_controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.prettierignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.prettierrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/adonisrc.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/adonisrc.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/middleware/auth_middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/middleware/auth_middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/migrations/1735227126799_create_access_tokens_table.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/migrations/1735227126799_create_access_tokens_table.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/start/kernel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/start/kernel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.eslintrc.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.eslintrc.cjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/auth/SignUpLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/auth/SignUpLogin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/features/HomePage/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/HomePage/HomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/features/MainContent/MainContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/features/MainContent/MainContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/hooks/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/hooks/useAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/services/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/api.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +83,7 @@
       <workItem from="1735224133817" duration="1081000" />
       <workItem from="1735225251962" duration="3724000" />
       <workItem from="1735239686529" duration="6158000" />
-      <workItem from="1735247484789" duration="645000" />
+      <workItem from="1735247484789" duration="995000" />
     </task>
     <servers />
   </component>
