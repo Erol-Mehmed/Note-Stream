@@ -21,13 +21,13 @@ const SignUpLogin = () => {
       setSignUpOrLogin('singUp');
     }
   }, []);
-  
+
   const [ signUpOrLogin, setSignUpOrLogin ] = useState('login');
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
-  
+
   const [loginEmail , setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  
+
   const [signupEmail, setSignupEmail] = useState('');
   const [signupUsername, setSignupUsername] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
@@ -72,7 +72,7 @@ const SignUpLogin = () => {
     setSignUpUsernameError('');
     setSignUpPasswordError('');
     setSignUpConfirmPasswordError('');
-    
+
     let validationError = false;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -82,7 +82,7 @@ const SignUpLogin = () => {
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email format.']);
         validationError = true;
       }
-      
+
       if (loginPassword.length < 6) {
         setLoginPasswordError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Password must have at least 6 characters.']);
@@ -92,7 +92,7 @@ const SignUpLogin = () => {
       if (validationError) {
         return;
       }
-      
+
       const response = await api.post('/auth/login', {
         email: loginEmail,
         password: loginPassword
@@ -108,19 +108,19 @@ const SignUpLogin = () => {
       }
     } else {
       const usernameRegex = /^[a-zA-Z0-9 ]{3,}$/;
-      
+
       if (!emailRegex.test(signupEmail)) {
         setSignUpEmailError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Invalid email format.']);
         validationError = true;
       }
-      
+
       if (!usernameRegex.test(signupUsername)) {
         setSignUpUsernameError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Username must have at least 3 characters.']);
         validationError = true;
       }
-      
+
       if (signupPassword.length < 6) {
         setSignUpPasswordError('error');
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Password must have at least 6 characters.']);
@@ -132,7 +132,7 @@ const SignUpLogin = () => {
         setErrorMessages(previousErrorMessages => [...previousErrorMessages, 'Passwords do not match.']);
         validationError = true;
       }
-      
+
       if (validationError) {
         return;
       }
@@ -163,7 +163,7 @@ const SignUpLogin = () => {
         <Box display="flex" flexDirection="column" alignItems="center">
           <h2>Login</h2>
           <form className="form" onSubmit={submit}>
-            <input type="text" name="email" placeholder="Email" className={loginEmailError} value={loginEmail} 
+            <input type="text" name="email" placeholder="Email" className={loginEmailError} value={loginEmail}
               onChange={(e) => setLoginEmail(e.target.value)} />
             <input type="password" name="password" placeholder="Password" className={loginPasswordError} value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)} />
@@ -198,7 +198,7 @@ const SignUpLogin = () => {
                 Login
               </button>
             </Box>
-          </Box>   
+          </Box>
         )
       }
 

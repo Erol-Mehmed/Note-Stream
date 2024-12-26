@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import api from "../services/api.ts";
+import { useNavigate } from 'react-router-dom';
+import api from '../services/api.ts';
 
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -8,20 +8,24 @@ const useAuth = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const response = await api.get('auth/check', {
-        withCredentials: true
+      const response = await api.get('check-token', {
+        withCredentials: true,
       });
 
       setIsLoggedIn(response.data.isAuthenticated);
-    }
+    };
 
-    checkAuth().then(r => r);
+    checkAuth().then((r) => r);
   });
 
   const logout = async () => {
-    await api.post('auth/logout', {}, {
-      withCredentials: true
-    })
+    await api.post(
+      'auth/logout',
+      {},
+      {
+        withCredentials: true,
+      },
+    );
 
     setIsLoggedIn(false);
     routeNavigate('/login');

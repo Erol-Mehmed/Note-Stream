@@ -1,6 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import "./MainContent.scss";
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "../../services/api";
 import iconClose from "../../assets/icon-close.svg";
 import NoteModal from "./NoteModal.tsx";
@@ -159,7 +159,7 @@ const MainContent = () => {
       setFeedbackVisible(true);
       setTimeout(() => {
         setFeedbackVisible(false);
-        setFeedbackMessage(''); 
+        setFeedbackMessage('');
       }, 10000);
     }
   }, [feedbackMessage]);

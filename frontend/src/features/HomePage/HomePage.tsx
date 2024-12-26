@@ -10,9 +10,11 @@ const HomePage = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const response = await api.get('auth/check', {
-        withCredentials: true
+      const response = await api.get('check-token', {
+        withCredentials: true,
       });
+
+      console.log(response.data);
 
       if (response.data.isAuthenticated === false) {
         routeNavigate('/login');
@@ -20,7 +22,7 @@ const HomePage = () => {
     };
 
     checkAuth().then(r => r);
-  }, []);
+  }, [routeNavigate]);
 
   if (isLoggedIn) {
     return <MainContent />

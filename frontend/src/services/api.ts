@@ -1,7 +1,17 @@
-import axios from 'axios';
+import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:3333',
+  withCredentials: true,
 });
 
-export default api;
+const request = async <T>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
+  try {
+    return await api.request<T>(config);
+  } catch (error) {
+    // Handle error as needed
+    throw error;
+  }
+};
+
+export default request;
