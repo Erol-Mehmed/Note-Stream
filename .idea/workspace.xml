@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="989dbc87-6edd-47e9-8721-45cbe835742a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/database/migrations/1735429957556_create_users_table.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/app.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -50,8 +59,8 @@
     "node.js.selected.package.stylelint": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "D:\\Programing\\GitHub Projects\\Note-Stream\\backend\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "prettierjs.PrettierConfiguration.Package": "D:\\Programing\\GitHub Projects\\Note-Stream\\frontend\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "com.github.copilot.settings.ApplicationConfigurable",
     "ts.external.directory.path": "D:\\Programing\\GitHub Projects\\Note-Stream\\frontend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -84,6 +93,8 @@
       <workItem from="1735225251962" duration="3724000" />
       <workItem from="1735239686529" duration="6158000" />
       <workItem from="1735247484789" duration="995000" />
+      <workItem from="1735424507872" duration="3407000" />
+      <workItem from="1735428324448" duration="1983000" />
     </task>
     <servers />
   </component>
