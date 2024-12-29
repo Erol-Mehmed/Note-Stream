@@ -8,9 +8,7 @@ const useAuth = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const response = await api.get('check-token', {
-        withCredentials: true,
-      });
+      const response = await api.get('check-token');
 
       setIsLoggedIn(response.data.isAuthenticated);
     };

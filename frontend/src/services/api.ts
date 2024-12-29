@@ -1,17 +1,24 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const api = axios.create({
   baseURL: 'http://localhost:3333',
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-const request = async <T>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
-  try {
-    return await api.request<T>(config);
-  } catch (error) {
-    // Handle error as needed
-    throw error;
-  }
-};
+api.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.status === 401) {
+      window.location.href = '/login';
+    }
 
-export default request;
+    return Promise.reject(error);
+  },
+);
+
+export default api;

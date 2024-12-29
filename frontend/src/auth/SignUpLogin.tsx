@@ -14,13 +14,13 @@ const SignUpLogin = () => {
     if (isLoggedIn) {
       routeNavigate('/');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, routeNavigate]);
 
   useEffect(() => {
     if (location.pathname === '/register') {
       setSignUpOrLogin('singUp');
     }
-  }, []);
+  }, [location.pathname]);
 
   const [ signUpOrLogin, setSignUpOrLogin ] = useState('login');
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
