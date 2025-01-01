@@ -7,10 +7,10 @@
 |
 */
 
-import router from '@adonisjs/core/services/router'
-import UsersController from '#controllers/users_controller';
+import router from '@adonisjs/core/services/router';
 
-router.get('/', async (ctx) => {
-  const usersController = new UsersController()
-  return usersController.index(ctx)
-})
+router.get('/check-token', async (ctx) => {
+  console.log('check token>>', ctx.auth);
+
+  return { isAuthenticated: !!ctx.auth.user };
+});

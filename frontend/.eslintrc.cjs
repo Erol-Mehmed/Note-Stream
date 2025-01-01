@@ -14,7 +14,10 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'no-console': 'warn',
     'no-trailing-spaces': 'error',
     'object-curly-spacing': ['error', 'always'],
+    'comma-dangle': ['error', 'always-multiline'],
+    'eol-last': ['error', 'always'],
   },
 };

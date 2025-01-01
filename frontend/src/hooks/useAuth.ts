@@ -10,6 +10,8 @@ const useAuth = () => {
     const checkAuth = async () => {
       const response = await api.get('check-token');
 
+      console.log('use auth>>', response.data);
+
       setIsLoggedIn(response.data.isAuthenticated);
     };
 
